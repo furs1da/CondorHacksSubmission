@@ -227,10 +227,26 @@ namespace Tasks.Controllers
             Users tempUser = _userService.FindUser(emailCurrentUser, db);
 
             var assignments = _userService.GetAllAssignmentsUser(tempUser, db).ToList();
-           
+            List<AssignmentModel> assgnlist = new List<AssignmentModel>();
             if (assignments != null)
-            {          
-                return Ok(assignments);
+            {
+                foreach (Assignment assg in assignments)
+                {
+                    string difficulty = "", length = "", done="", subject = "" ;
+                    subject = db.Subjects.Where(ent => ent.IdSubject == assg.IdSubject).FirstOrDefault().SubjectName;
+                    length = db.Length.Where(ent => ent.IdLength == assg.Length).FirstOrDefault().Length1;
+                    difficulty = db.Difficulty.Where(ent => ent.IdLevelOfDifficulty == assg.Difficulty).FirstOrDefault().Value.ToString();
+                    if (assg.Done == true)
+                    {
+                        done = "Yes"; 
+                    }
+                    else
+                    {
+                        done = "No";
+                    }
+                    assgnlist.Add(new AssignmentModel(assg.IdAssignment, assg.Name, assg.Deadline, assg.Description, difficulty, length, assg.PercentOfFinalGrade, done, subject, assg.Flagged));
+                }
+                return Ok(assgnlist);
             }
             else
                 return BadRequest(new { message = "No items." });

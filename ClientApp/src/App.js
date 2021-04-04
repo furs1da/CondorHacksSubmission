@@ -4,6 +4,7 @@ import { Layout } from './components/Layout';
 import { Home } from './components/Home';
 import { LoginPage } from './components/LoginPage';
 import { AddAssignment } from './components/AddAssignment';
+import { ListAssignment } from './components/ListOfTasks';
 import { history, Role } from './helpers';
 import { authenticationService } from './services';
 import { PrivateRoute } from './components/PrivateRoute';
@@ -51,7 +52,7 @@ export default class App extends Component {
                             <Navbar.Collapse id="responsive-navbar-nav">
                                 <Nav>
                                     <Nav.Link as={Link} to="/addTask"><i class="user outline icon"></i>Add a task</Nav.Link>
-                                    <Nav.Link as={Link} to="/watchFeedbackPupil"><i class="envelope outline icon"></i>List of tasks</Nav.Link>
+                                    <Nav.Link as={Link} to="/tasks"><i class="envelope outline icon"></i>List of tasks</Nav.Link>
                                     <Nav.Link onClick={this.logout}><i class="sign out alternate icon"></i>Exit</Nav.Link>
                                 </Nav>
                             </Navbar.Collapse>
@@ -79,6 +80,8 @@ export default class App extends Component {
 
                                 <PrivateRoute path="/addTaskARCHIEVE" roles={[Role.User]} component={AddAssignment} />
                                 <Route path="/addTask" component={AddAssignment} />
+                                <Route path="/tasks" component={ListAssignment} />
+                                
                                 <Route path="/login" component={LoginPage} />
                                 <Route path="/register" component={RegisterPage} />
                             </div>
@@ -88,7 +91,7 @@ export default class App extends Component {
 
                 </div>
                 <div style={{ position: "relative" }}>
-                <footer class="text-50" style={{
+                    <footer class="text-50" style={{
                     minHeight: 5 + "vh",
                     backgroundColor: "#white",
                         color: "#A43023",
